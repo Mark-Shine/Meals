@@ -1,0 +1,56 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监控平台</title>
+    <link href="{% static "bootstrap/dist/css/bootstrap.css" %} " rel="stylesheet">
+    <link href="{% static "bootstrap/dist/css/dashboard.css" %} " rel="stylesheet">
+    <link href="{% static "cover.css" %} " rel="stylesheet">
+    <!-- <link href="{% static "jquery/jquery.js" %} " rel="stylesheet"> -->
+    <!-- <link href="{% static "bootstrap/dist/js/bootstrap.js" %} " rel="stylesheet"> -->
+    <!-- <link href="{{STATIC_URL}}bootstrap/dist/css/dashboard.css" rel="stylesheet"> -->
+    {{css_set}} 
+    <script src="{% static "jquery/jquery.js" %}"></script>
+    <!-- // <script src="{{STATIC_URL}}jquery/jquery.js"></script> -->
+    <!-- // <script src="{{STATIC_URL}}bootstrap/dist/js/bootstrap.js"></script> -->
+    <script src="{% static "bootstrap/dist/js/bootstrap.js" %}"></script>
+</head>
+
+<body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+
+          <div class="inner cover">
+            <h1 class="cover-heading"><a href="{%url 'home' %}">今天吃啥</a></h1>
+            {%for res in res_list %}
+              <p class="lead">{{res.name}}</p>
+            {%endfor%}
+            <p class="lead">{{name}}</p>
+            <p class="lead">
+              <a href="{%url 'getmeal' %}" class="btn btn-lg btn-default">开始</a>
+            </p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Made by Mark</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+
+
+</html>

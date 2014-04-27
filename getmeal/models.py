@@ -6,6 +6,10 @@ from django.db import models
 
 class RestShop(models.Model):
     """关键字"""
+
+    def __unicode__(self):
+        return self.name
+
     name = models.CharField(max_length=32, blank=True, null=True)
     breakfast = models.IntegerField(blank=True, null=True)
     lunch = models.IntegerField(blank=True, null=True)
