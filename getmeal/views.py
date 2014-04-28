@@ -58,24 +58,11 @@ def getmeals_mobile(request):
     now_hour = str(datetime.datetime.utcnow().hour+8)
     filter_conditon = TIME_TABLE.get(now_hour)
     res_query = RestShop.objects.filter(Q(**{filter_conditon: "1"}))
-    count  = res_query.count()
-    pk = random.randrange(0, count)
-    res = res_query[pk]
-    data = dict(name=res.name, addr=res.address, tel=res.telephone)
-    # json_data = json.dumps(data)
-    page = render_to_string("myapp.html", data, context_instance=None)
-    # render_to_string(   template_name, dictionary, context_instance)
-    return HttpResponse(page)
+    data = [r.name for r in res_query]
+    json_data = json.dumps(data)
+    return HttpResponse(json_data)
 
 def home(request):
-    res_query = RestShop.objects.all()
-    count  = res_query.count()
-    if count > 5:
-        pk = random.randrange(2, count-2)
-        res_list = [res_query[pk], res_query[pk-1], res_query[pk+1]]
-    elif count > 0 :
-        res_list = [res_query[0]]
-    data = dict(res_list=res_list)
-    page = render_to_string("myapp.html", data, context_instance=None)
+    page = render_to_string("myapp.html", {}, context_instance=None)
     return HttpResponse(page)
 

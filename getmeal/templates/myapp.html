@@ -7,14 +7,10 @@
     <title>吃啥</title>
     <link href="{% static "bootstrap/dist/css/bootstrap.css" %} " rel="stylesheet">
     <link href="{% static "bootstrap/dist/css/dashboard.css" %} " rel="stylesheet">
-    <link href="{% static "cover.css" %} " rel="stylesheet">
-    <!-- <link href="{% static "jquery/jquery.js" %} " rel="stylesheet"> -->
-    <!-- <link href="{% static "bootstrap/dist/js/bootstrap.js" %} " rel="stylesheet"> -->
-    <!-- <link href="{{STATIC_URL}}bootstrap/dist/css/dashboard.css" rel="stylesheet"> -->
+    <link href="{% static "css/cover.css" %} " rel="stylesheet">
+    <link href="{% static "css/random.css" %} " rel="stylesheet">
     {{css_set}} 
     <script src="{% static "jquery/jquery.js" %}"></script>
-    <!-- // <script src="{{STATIC_URL}}jquery/jquery.js"></script> -->
-    <!-- // <script src="{{STATIC_URL}}bootstrap/dist/js/bootstrap.js"></script> -->
     <script src="{% static "bootstrap/dist/js/bootstrap.js" %}"></script>
 </head>
 
@@ -29,13 +25,12 @@
 
           <div class="inner cover">
             <h1 class="cover-heading"><a href="{%url 'home' %}">今天吃啥</a></h1>
-            {%for res in res_list %}
-              <p class="lead">{{res.name}}</p>
-            {%endfor%}
-            <p class="lead">{{name}}</p>
-            <p class="lead">
-              <a href="{%url 'getmeal' %}" class="btn btn-lg btn-default">开始</a>
-            </p>
+            </pre>
+              <div class="wrap">
+              <div id="show" class="show">点击按钮开始</div>
+              <div class="btn"><a id="btn" class="start" href="javascript:void(0)">开始</a></div>
+              </div>
+            <pre>
           </div>
 
           <div class="mastfoot">
@@ -51,6 +46,54 @@
     </div>
 
   </body>
+<script type="text/javascript">
 
+  $(function(){
+    var alldata = Array();
+    var num ;
+    var show = $("#show");
+    var btn = $("#btn");
+    var open = false;
+    var url = "{% url 'getmeal' %}"
+    var i = 1;
+    getdata();
+ 
+    function change(){
+        var randomVal = Math.round(Math.random() * num);
+        var prizeName = alldata[randomVal];
+        show.text(prizeName);
+    }
+
+    function getdata(){
+      $.get("/getmeal" , function( data ) {
+        alldata = data;
+      });
+    }
+ 
+    function run(){
+        if(!open){
+            if (i==1){
+              alldata = JSON.parse(alldata);
+              num = alldata.length - 1;
+              i--;
+            }
+            
+            timer=setInterval(change,30);
+            btn.removeClass('start').addClass('stop').text('停止');
+            open = true;
+        }else{
+            clearInterval(timer);
+            btn.removeClass('stop').addClass('start').text('开始');
+            open = false;
+        }
+    }
+ 
+    btn.click(function(){run();})
+ 
+})
+
+
+
+</script>
 
 </html>
