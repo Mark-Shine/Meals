@@ -25,12 +25,15 @@
 
           <div class="inner cover">
             <h1 class="cover-heading"><a href="{%url 'home' %}">今天吃啥</a></h1>
-            </pre>
+              <p>{{time_eat}}</p>
               <div class="wrap">
-              <div id="show" class="show">点击按钮开始</div>
-              <div class="btn"><a id="btn" class="start" href="javascript:void(0)">开始</a></div>
+              <div id="show" class="show" style="height:60px">
+                  <p id="J_Name"></p>  
+                  <p id="J_Tel"></p>  
+                  <p id="J_Addr"></p>  
               </div>
-            <pre>
+              <div class="btn"><a id="btn" class="start" href="javascript:void(0)">点击开始</a></div>
+              </div>
           </div>
 
           <div class="mastfoot">
@@ -54,14 +57,17 @@
     var show = $("#show");
     var btn = $("#btn");
     var open = false;
-    var url = "{% url 'getmeal' %}"
+    var url = "{% url 'getmeal' %}";
     var i = 1;
     getdata();
  
     function change(){
         var randomVal = Math.round(Math.random() * num);
-        var prizeName = alldata[randomVal];
-        show.text(prizeName);
+        var prize = alldata[randomVal];
+        $("#J_Name").text(prize[0]);
+        $("#J_Tel").text(prize[1]);
+        $("#J_Addr").text(prize[2]);
+        // show.text(prize[0]);
     }
 
     function getdata(){

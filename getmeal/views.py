@@ -52,17 +52,26 @@ TIME_TABLE = {
     '23': "midnight",
 }
 
+MEAL_NAME = {
+    'breakfast': u'早餐',
+    'lunch':u"中餐",
+    'meal':u"晚餐",
+    'midnight':u'夜宵'
+}
 
 def getmeals_mobile(request):
     """随机返回餐馆"""
     now_hour = str(datetime.datetime.utcnow().hour+8)
     filter_conditon = TIME_TABLE.get(now_hour)
     res_query = RestShop.objects.filter(Q(**{filter_conditon: "1"}))
-    data = [r.name for r in res_query]
+    data = [(r.name, r.telephone , r.address) for r in res_query]
     json_data = json.dumps(data)
     return HttpResponse(json_data)
 
 def home(request):
-    page = render_to_string("myapp.html", {}, context_instance=None)
+    now_hour = str(datetime.datetime.utcnow().hour+8)
+    time_v = filter_conditon = TIME_TABLE.get(now_hour)
+    time_eat = MEAL_NAME.get(time_v)
+    page = render_to_string("myapp.html", {"time_eat": time_eat}, context_instance=None)
     return HttpResponse(page)
 
