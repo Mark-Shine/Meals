@@ -29,10 +29,10 @@
               <div class="wrap">
               <div id="show" class="show" style="height:60px">
                   <p id="J_Name"></p>  
-                  <p id="J_Tel"></p>  
-                  <p id="J_Addr"></p>  
+                  <p id="J_Tel"   ></p>  
+                  <p id="J_Addr"   ></p>  
               </div>
-              <div class="btn" style="margin-top: 10px"><a id="btn" class="start" href="javascript:void(0)">点击开始</a></div>
+              <div class="btn" style="margin-top: 20px"><a id="btn" class="start" href="javascript:void(0)">点击开始</a></div>
               </div>
           </div>
 
@@ -71,11 +71,10 @@
         $("#J_Name").text(prize[0]);
         $("#J_Tel").text(prize[1]);
         $("#J_Addr").text(prize[2]);
-        // show.text(prize[0]);
     }
 
     function getdata(){
-      $.get("rest/getmeal" , function( data ) {
+      $.get(url , function( data ) {
         alldata = data;
       });
     }
@@ -91,8 +90,13 @@
             timer=setInterval(change,30);
             btn.removeClass('start').addClass('stop').text('停止');
             open = true;
+            $("#J_Tel").hide();
+            $("#J_Addr").hide();
+
         }else{
             clearInterval(timer);
+            $("#J_Tel").show();
+            $("#J_Addr").show();
             btn.removeClass('stop').addClass('start').text('开始');
             open = false;
         }
