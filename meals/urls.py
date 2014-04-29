@@ -7,7 +7,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^getmeal$', 'getmeal.views.getmeals_mobile', name='getmeal'),
-    url(r'^rest$', 'getmeal.views.home', name='home'),
+    url(r'^$', 'getmeal.views.home', name='home'),
     # url(r'^meals/', include('meals.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
