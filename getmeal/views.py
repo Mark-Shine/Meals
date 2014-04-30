@@ -3,6 +3,7 @@
 
 import json
 import datetime
+import time
 import random
 
 from django.utils import timezone
@@ -21,6 +22,7 @@ from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
+
 
 
 from .models import RestShop
@@ -61,7 +63,7 @@ MEAL_NAME = {
 
 def getmeals_mobile(request):
     """随机返回餐馆"""
-    now_hour = str(datetime.datetime.utcnow().hour+8)
+    now_hour = str(time.localtime(time.time()).tm_hour)
     filter_conditon = TIME_TABLE.get(now_hour)
     res_query = RestShop.objects.filter(Q(**{filter_conditon: "1"}))
     data = [(r.name, r.telephone , r.address) for r in res_query]
